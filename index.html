@@ -107,29 +107,29 @@
         }
       });
 
-      async function askTaxBot(question) {
-        try {
-          displayLoading();
+     async function askTaxBot(question) {
+  try {
+    displayLoading();
 
-          const response = await fetch('https://tax.sp12.workers.dev', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'text/plain',
-            },
-            body: question,
-          });
+    const response = await fetch('https://tax.sp12.workers.dev', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ task: question }),
+    });
 
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
 
-          const answer = await response.json();
-          displayAnswer(answer.output);
-        } catch (error) {
-          console.error('Error retrieving the answer:', error);
-          displayError('Sorry, there was a problem retrieving the answer.');
-        }
-      }
+    const answer = await response.json();
+    displayAnswer(answer.output);
+  } catch (error) {
+    console.error('Error retrieving the answer:', error);
+    displayError('Sorry, there was a problem retrieving the answer.');
+  }
+}
 
       function displayLoading() {
         document.getElementById('answer').innerHTML = '<div class="loading">Loading...</div>';
